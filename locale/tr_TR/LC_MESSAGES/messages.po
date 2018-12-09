@@ -1,0 +1,261 @@
+# Turkish (Turkey) translations for JustBot.
+#
+# This file is distributed under the same license as the JustBot project.
+# Utku Tombul <utkutombul@yahoo.com.tr>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: JustBot 1.0\n"
+"Report-Msgid-Bugs-To: utkutombul@yahoo.com.tr\n"
+"POT-Creation-Date: 2018-12-09 23:05+0300\n"
+"PO-Revision-Date: 2018-12-09 23:05+0300\n"
+"Last-Translator: Utku Tombul <utkutombul@yahoo.com.tr>\n"
+"Language: tr_TR\n"
+"Language-Team: tr_TR <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
+
+#: commands.py:36
+msgid "*{user} has the following currencies:*"
+msgstr "*{user} aşağıdaki para birimlerine sahip:*"
+
+#: commands.py:39 commands.py:66 commands.py:76
+msgid "Bank of {server}"
+msgstr "{server} Bankası"
+
+#: commands.py:48
+msgid "This person doesn't have any currencies."
+msgstr "Bu kişinin hiç parası yok."
+
+#: commands.py:63 commands.py:75
+msgid "*Latest exchange rates for the selected currency ({currency}):*"
+msgstr "*{currency} için son döviz kurları:*"
+
+#: commands.py:107
+msgid ""
+"{user} paid {amount} {currency} and bought {converted_amount} "
+"{converted_currency}."
+msgstr "{user} {amount} {currency} ödedi ve karşılığında {converted_amount} {converted_currency} satın aldı."
+
+#: commands.py:109
+msgid "Invalid currency."
+msgstr "Geçersiz bir para birimi girdiniz."
+
+#: commands.py:111
+msgid "You don't have enough {currency} to exchange."
+msgstr "Takas için yeterli {currency} yok."
+
+#: commands.py:115
+msgid "{prefix}forex (Currency (SELL)) (Purchase amount) (Currency (BUY))"
+msgstr "{prefix}forex (Para Birimi (SATILAN)) (Satın Alınacak Miktar) (Para Birimi (SATIN ALINAN))"
+
+#: commands.py:172
+msgid "Dealer has {dealer_hand} in total of {total}."
+msgstr "Kurpiyerde {dealer_hand} karşılığı toplam {total} var."
+
+#: commands.py:174 commands.py:261
+msgid "Dealer shows a {dealer_hand}."
+msgstr "Kurpiyer bir {dealer_hand} gösteriyor."
+
+#: commands.py:175 commands.py:264
+msgid "You have {player_hand} in total of {total_player_hand}."
+msgstr "Sizde {player_hand} karşılığı toplam {total_player_hand} var."
+
+#: commands.py:180 commands.py:209
+msgid "BLACKJACK!"
+msgstr "BLACKJACK!"
+
+#: commands.py:184 commands.py:213
+msgid "Sorry, you lost. Dealer hit a blackjack."
+msgstr "Üzgünüm, kaybettiniz. Kurpiyer blackjack açtı."
+
+#: commands.py:216
+msgid "You busted. You lost."
+msgstr "Patladınız. Kaybettiniz."
+
+#: commands.py:219
+msgid "Dealer busted. You won!"
+msgstr "Kurpiyer patladı. Kazandınız!"
+
+#: commands.py:223
+msgid "Dealer has a higher hand. You lost."
+msgstr "Kurpiyerin eli daha yüksek. Kaybettiniz."
+
+#: commands.py:227
+msgid "You have a higher hand. You won!"
+msgstr "Sizin eliniz daha yüksek. Kazandınız!"
+
+#: commands.py:231 commands.py:273
+msgid "hit"
+msgstr "aç"
+
+#: commands.py:231 commands.py:268 commands.py:278 commands.py:279
+msgid "stop"
+msgstr "dur"
+
+#: commands.py:256
+msgid "You put {amount} {currency}."
+msgstr "{amount} {currency} bahis koydunuz."
+
+#: commands.py:259
+msgid "Dealing cards..."
+msgstr "Kartlar açılıyor..."
+
+#: commands.py:269
+msgid "Would you like to [hit], or [stop]?"
+msgstr "Kart mı [aç]mak istersiniz, [dur]mak mı?,"
+
+#: commands.py:288 commands.py:456 commands.py:502
+msgid "You don't have have enough {currency}."
+msgstr "Hesabınızda yeterli {currency} yok."
+
+#: commands.py:290
+msgid "{prefix}blackjack (Bet ({amount}))"
+msgstr "{prefix}blackjack (Bahis ({amount}))"
+
+#: commands.py:296
+msgid "red"
+msgstr "kırmızı"
+
+#: commands.py:300
+msgid "black"
+msgstr "siyah"
+
+#: commands.py:304
+msgid "green"
+msgstr "yeşil"
+
+#: commands.py:308
+msgid "odd"
+msgstr "tek"
+
+#: commands.py:312
+msgid "even"
+msgstr "çift"
+
+#: commands.py:316
+msgid "number (0-36)"
+msgstr "sayı (0-36)"
+
+#: commands.py:320
+msgid "first column"
+msgstr "ilk sütun"
+
+#: commands.py:324
+msgid "second column"
+msgstr "ikinci sütun"
+
+#: commands.py:328
+msgid "third column"
+msgstr "üçüncü sütun"
+
+#: commands.py:332
+msgid "first dozen"
+msgstr "ilk düzine"
+
+#: commands.py:336
+msgid "second dozen"
+msgstr "ikinci düzine"
+
+#: commands.py:340
+msgid "third dozen"
+msgstr "üçüncü düzine"
+
+#: commands.py:353 commands.py:487
+msgid "Invalid bet amount."
+msgstr "Geçersiz bir bahis miktarı girdiniz."
+
+#: commands.py:366 commands.py:368
+msgid "Invalid bet type."
+msgstr "Geçersiz bir bahis türü girdiniz."
+
+#: commands.py:444
+msgid "**Roulette**"
+msgstr "**Rulet**"
+
+#: commands.py:452
+msgid "You won! {amount} {currency} added to your bank account."
+msgstr "Kazandınız! {amount} {currency} hesabınıza eklendi."
+
+#: commands.py:454
+msgid "Sorry, you lost."
+msgstr "Üzgünüm, kaybettiniz."
+
+#: commands.py:469
+msgid "{prefix}roulette (Bet ({currency})) (Bet Type ({bet_type_list}))"
+msgstr "{prefix}rulet (Bahis ({currency})) (Bahis Türü ({bet_type_list}))"
+
+#: commands.py:474
+msgid "_**Current open bets:**_"
+msgstr "_**Açık bahisler:**_"
+
+#: commands.py:485 commands.py:495
+msgid "Invalid bet number."
+msgstr "Geçersiz bir bahis numarası girdiniz."
+
+#: commands.py:514
+msgid ""
+"You have added {bet_amount} {bet_currency} to your previous bet on "
+"#{bet_id}, making a total of {total_bet_amount} {bet_currency} on that "
+"bet."
+msgstr "#{bet_id} numaralı bahis için önceden yatırmış olduğunuz miktara {bet_amount} {bet_currency} eklediniz ve toplam {total_bet_amount} {bet_currency} oldu."
+
+#: commands.py:519
+msgid "You betted {bet_amount} {bet_currency} for #{bet_id}."
+msgstr "#{bet_id} numaralı bahis için {bet_amount} {bet_currency} yatırdınız"
+
+#: commands.py:523
+msgid "{prefix}bahisoyna (Bet Number) (Bet Amount)*"
+msgstr "{prefix}bahisoyna (Bahis Numarası) (Yatırılacak Miktar)*"
+
+#: commands.py:536 commands.py:545
+msgid "Command has successfully been executed."
+msgstr "İşlem başarıyla gerçekleştirildi."
+
+#: commands.py:553 commands.py:561
+msgid "Deleted {deleted} messages."
+msgstr "{deleted} mesaj silindi."
+
+#: commands.py:571
+msgid "{user} has opened a new bet: `{bet} ({bet_rate})`"
+msgstr "{user} yeni bir bahis açtı: `{bet} ({bet_rate})`"
+
+#: commands.py:573 commands.py:606
+msgid "You don't have access to this command."
+msgstr "Bu komuta erişmek için yetkiniz yok."
+
+#: commands.py:584
+msgid "Result of \"{bet}\": `WON`"
+msgstr "\"{bet}\" için sonuç: `TUTTU`"
+
+#: commands.py:586
+msgid "Result of \"{bet}\": `LOST`"
+msgstr "\"{bet}\" için sonuç: `YATTI`"
+
+#: commands.py:596
+msgid "{user} has successfully predicted this bet and won {award} {currency}."
+msgstr "{user} bu bahsi tutturdu ve {award} {currency} kazandı."
+
+#: commands.py:598
+msgid "{user} lost {deposit} {currency}."
+msgstr "{user} {deposit} {currency} kaybetti."
+
+#: events.py:76
+msgid "Message deleted for **{user}** in *{channel}*: `{message}`"
+msgstr "**{user}** kullanıcısının *{channel}* kanalındaki mesajı silindi: `{message}`"
+
+#: events.py:81
+msgid "`{user}` has left the server."
+msgstr "`{user}` sunucudan ayrıldı."
+
+#: events.py:86
+msgid "`{user}` has been banned from the server."
+msgstr "`{user}` sunucudan yasaklandı."
+
+#: events.py:91
+msgid "`{user}` has been unbanned from the server."
+msgstr "`{user}` kullanıcısının yasağı kaldırıldı."
+
