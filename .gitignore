@@ -102,3 +102,8 @@ ENV/
 
 # SQLite
 .db
+
+# JustBot special
+backup/
+.vscode/
+config.py

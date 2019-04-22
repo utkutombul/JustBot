@@ -14,6 +14,7 @@
 """
 
 import asyncio
+import datetime
 import discord
 
 from config import Config
@@ -47,7 +48,7 @@ async def para(message, arguments):
     if not counter:
         embed.description = _("This person doesn't have any currencies.")
 
-    await client.send_message(message.channel, embed=embed)
+    await message.channel.send(embed=embed)
 
 
 async def dövizkurları(message, arguments):
@@ -71,7 +72,7 @@ async def dövizkurları(message, arguments):
         if counter < 25:
             counter += 1
         else:
-            await client.send_message(message.author, embed=embed)
+            await message.author.send(embed=embed)
             embed = discord.Embed(title=_("*Latest exchange rates for the selected currency ({currency}):*").format_map({"currency": currency_code}), color=0x008000)
             embed.set_author(name=_("Bank of {server}").format_map({"server": message.channel.server.name}))
             counter = 1
@@ -82,7 +83,7 @@ async def dövizkurları(message, arguments):
     embed.add_field(name=Config.CURRENCY_CODE, value=str(
         convert_currency(currency_code, Config.CURRENCY_CODE)), inline=True)
 
-    await client.send_message(message.author, embed=embed)
+    await message.author.send(embed=embed)
 
 
 async def forex(message, arguments):
@@ -104,11 +105,11 @@ async def forex(message, arguments):
                 remove_currency_from_user(get_user(discord_id=message.author.id).first(
                 ).id, base_currency.short_code, required_fee)
 
-                await client.send_message(message.channel, _("{user} paid {amount} {currency} and bought {converted_amount} {converted_currency}.").format_map({"user": message.author.name, "amount": required_fee, "currency": base_currency.short_code, "converted_amount": amount, "converted_currency": currency.short_code}))
+                await message.channel.send(_("{user} paid {amount} {currency} and bought {converted_amount} {converted_currency}.").format_map({"user": message.author.name, "amount": required_fee, "currency": base_currency.short_code, "converted_amount": amount, "converted_currency": currency.short_code}))
             else:
-                await client.send_message(message.author, _("Invalid currency."))
+                await message.author.send(_("Invalid currency."))
         else:
-            await client.send_message(message.author, _("You don't have enough {currency} to exchange.").format_map({"currency": base_currency.short_code}))
+            await message.author.send(_("You don't have enough {currency} to exchange.").format_map({"currency": base_currency.short_code}))
     else:
         await send_usage_message(
             message.channel,
@@ -169,19 +170,19 @@ async def blackjack(message, arguments):
 
     async def print_results(dealer_hand, player_hand, dealer_turn = False):
         if dealer_turn:
-            await client.send_message(message.channel, _("Dealer has {dealer_hand} in total of {total}.").format_map({"dealer_hand": str(dealer_hand), "total": str(total(dealer_hand))}))
+            await message.channel.send(_("Dealer has {dealer_hand} in total of {total}.").format_map({"dealer_hand": str(dealer_hand), "total": str(total(dealer_hand))}))
         else:
-            await client.send_message(message.channel, _("Dealer shows a {dealer_hand}.").format_map({"dealer_hand": str(dealer_hand[0])}))
-        await client.send_message(message.channel, _("You have {player_hand} in total of {total_player_hand}.").format_map({"player_hand": str(player_hand), "total_player_hand": str(total(player_hand))}))
+            await message.channel.send(_("Dealer shows a {dealer_hand}.").format_map({"dealer_hand": str(dealer_hand[0])}))
+        await message.channel.send(_("You have {player_hand} in total of {total_player_hand}.").format_map({"player_hand": str(player_hand), "total_player_hand": str(total(player_hand))}))
 
     async def bjack(dealer_hand, player_hand):
         if total(player_hand) == 21:
             await print_results(dealer_hand, player_hand)
-            await client.send_message(message.channel, _("BLACKJACK!") + "\n")
+            await message.channel.send(_("BLACKJACK!") + "\n")
             win()
         elif total(dealer_hand) == 21:
             await print_results(dealer_hand, player_hand)
-            await client.send_message(message.channel, _("Sorry, you lost. Dealer hit a blackjack.") + "\n")
+            await message.channel.send(_("Sorry, you lost. Dealer hit a blackjack.") + "\n")
 
     def winner_control(dealer_hand, player_hand):
         if total(player_hand) == 21:
@@ -206,25 +207,25 @@ async def blackjack(message, arguments):
     async def score(dealer_hand, player_hand, dealer_turn = False):
         if total(player_hand) == 21:
             await print_results(dealer_hand, player_hand, dealer_turn)
-            await client.send_message(message.channel, _("BLACKJACK!") + "\n")
+            await message.channel.send(_("BLACKJACK!") + "\n")
             win()
         elif total(dealer_hand) == 21:
             await print_results(dealer_hand, player_hand, dealer_turn)
-            await client.send_message(message.channel, _("Sorry, you lost. Dealer hit a blackjack.") + "\n")
+            await message.channel.send(_("Sorry, you lost. Dealer hit a blackjack.") + "\n")
         elif total(player_hand) > 21:
             await print_results(dealer_hand, player_hand, dealer_turn)
-            await client.send_message(message.channel, _("You busted. You lost.") + "\n")
+            await message.channel.send(_("You busted. You lost.") + "\n")
         elif total(dealer_hand) > 21:
             await print_results(dealer_hand, player_hand, dealer_turn)
-            await client.send_message(message.channel, _("Dealer busted. You won!") + "\n")
+            await message.channel.send(_("Dealer busted. You won!") + "\n")
         elif total(player_hand) < total(dealer_hand):
             await print_results(dealer_hand, player_hand, dealer_turn)
             if dealer_turn:
-                await client.send_message(message.channel, _("Dealer has a higher hand. You lost.") + "\n")
+                await message.channel.send(_("Dealer has a higher hand. You lost.") + "\n")
         elif total(player_hand) > total(dealer_hand):
             await print_results(dealer_hand, player_hand, dealer_turn)
             if dealer_turn:
-                await client.send_message(message.channel, _("You have a higher hand. You won!") + "\n")
+                await message.channel.send(_("You have a higher hand. You won!") + "\n")
                 win()
 
     def check_message(message):
@@ -255,7 +256,7 @@ async def blackjack(message, arguments):
 
             message_text=_("You put {amount} {currency}.").format_map({
                 "amount": bet, "currency": Config.CURRENCY_CODE})
-            dealer_message=await client.send_message(message.channel, message_text)
+            dealer_message=await message.channel.send(message_text)
             message_text += "\n" + _("Dealing cards...")
             await client.edit_message(dealer_message, message_text)
             message_text += "\n" + _("Dealer shows a {dealer_hand}.").format_map({
@@ -266,7 +267,7 @@ async def blackjack(message, arguments):
             await client.edit_message(dealer_message, message_text)
 
             while choice.find(_("stop")) == -1 and total(player_hand) < 21 and not blackjack_control(dealer_hand, player_hand):
-                await client.send_message(message.channel, _("Would you like to [hit], or [stop]?"))
+                await message.channel.send(_("Would you like to [hit], or [stop]?"))
                 message=await client.wait_for_message(author = message.author, check = check_message)
                 choice=message.content.lower()
 
@@ -285,7 +286,7 @@ async def blackjack(message, arguments):
             if blackjack_control(dealer_hand, player_hand):
                 await score(dealer_hand, player_hand, False)
         else:
-            await client.send_message(message.channel, _("You don't have have enough {currency}.").format_map({"currency": Config.CURRENCY_NAME}) + "\n")
+            await message.channel.send(_("You don't have have enough {currency}.").format_map({"currency": Config.CURRENCY_NAME}) + "\n")
     else:
         await send_usage_message(message.channel, _("{prefix}blackjack (Bet ({amount}))").format_map({"prefix": Config.COMMAND_PREFIX, "amount": Config.CURRENCY_CODE}))
 
@@ -350,7 +351,7 @@ async def rulet(message, arguments):
         try:
             bet_amount=float(arguments[0])
         except Exception as e:
-            await client.send_message(message.author, _("Invalid bet amount."))
+            await message.author.send(_("Invalid bet amount."))
 
         try:
             for type in bet_types:
@@ -363,9 +364,9 @@ async def rulet(message, arguments):
                         bet_type=bet_types[5]
 
             if not bet_type:
-                await client.send_message(message.author, _("Invalid bet type."))
+                await message.author.send(_("Invalid bet type."))
         except Exception as e:
-            await client.send_message(message.author, _("Invalid bet type."))
+            await message.author.send(_("Invalid bet type."))
 
         user_currency=get_user_currency(user_id = get_user(
             discord_id=message.author.id).first().id, short_code = Config.CURRENCY_CODE).first()
@@ -443,17 +444,17 @@ async def rulet(message, arguments):
 
                 embed = discord.Embed(title=_("**Roulette**"), description=str(random_generator), color=color)
                 embed.set_author(name=Config.BOT_NAME)
-                await client.send_message(message.channel, embed=embed)
+                await message.channel.send(embed=embed)
 
                 if won:
                     won_amount = bet_type["multiplier"] * bet_amount
                     add_currency_to_user(get_user(discord_id=message.author.id).first(
                     ).id, Config.CURRENCY_CODE, won_amount)
-                    await client.send_message(message.channel, _("You won! {amount} {currency} added to your bank account.").format_map({"amount": won_amount, "currency": Config.CURRENCY_CODE}))
+                    await message.channel.send(_("You won! {amount} {currency} added to your bank account.").format_map({"amount": won_amount, "currency": Config.CURRENCY_CODE}))
                 else:
-                    await client.send_message(message.channel, _("Sorry, you lost."))
+                    await message.channel.send(_("Sorry, you lost."))
             else:
-                await client.send_message(message.author, _("You don't have have enough {currency}.").format_map({"currency": Config.CURRENCY_NAME}))
+                await message.author.send(_("You don't have have enough {currency}.").format_map({"currency": Config.CURRENCY_NAME}))
     else:
         bet_type_list = ""
         count = 0
@@ -474,17 +475,26 @@ async def bahisler(message, arguments):
     output = _("_**Current open bets:**_") + "\n\n"
 
     for bet in bet_list:
-        output += "`#%d (%.2f) %s`\n" % (bet.id, bet.rate, bet.bet)
+        total_bets = get_user_bet(bet_id=bet.id).all()
+        total_deposit = 0
 
-    await client.send_message(message.channel, output)
+        for user_bet in total_bets:
+            total_deposit += int(user_bet.deposit)
+
+        if total_bets:
+            output += "`#{bet_id} ({bet_rate}) {bet}` - ({stats})\n".format(**{"bet_id": bet.id, "bet_rate": bet.rate, "bet": bet.bet, "stats": _("_{total_people}_ people bet _{total_deposit} {main_currency}_ on this.").format_map({"total_people": len(total_bets), "total_deposit": total_deposit, "main_currency": Config.CURRENCY_CODE})})
+        else:
+            output += "`#{bet_id} ({bet_rate}) {bet}`\n".format(**{"bet_id": bet.id, "bet_rate": bet.rate, "bet": bet.bet})
+
+    await message.channel.send(output)
 
 
 async def bahisoyna(message, arguments):
     if arguments:
         if int(arguments[0]) < 1:
-            await client.send_message(message.channel, _("Invalid bet number."))
+            await message.channel.send(_("Invalid bet number."))
         elif int(arguments[1]) < 1:
-            await client.send_message(message.channel, _("Invalid bet amount."))
+            await message.channel.send(_("Invalid bet amount."))
         else:
             bet_id = int(arguments[0])
             bet_amount = float(arguments[1])
@@ -492,14 +502,14 @@ async def bahisoyna(message, arguments):
             bet = get_bet(id=arguments[0]).first()
 
             if bet is None:
-                await client.send_message(message.channel, _("Invalid bet number."))
+                await message.channel.send(_("Invalid bet number."))
             else:
                 current_user = get_user(discord_id=message.author.id).first()
                 user_currency = get_user_currency(
                     currency_id=Config.CURRENCY_CODE, user_id=current_user.id).first()
 
                 if user_currency is None or user_currency.amount < bet_amount:
-                    await client.send_message(message.channel, _("You don't have have enough {currency}.").format_map({"currency": Config.CURRENCY_NAME}))
+                    await message.channel.send(_("You don't have have enough {currency}.").format_map({"currency": Config.CURRENCY_NAME}))
                 else:
                     remove_currency_from_user(get_user(
                         discord_id=message.author.id).first().id, Config.CURRENCY_CODE, bet_amount)
@@ -511,12 +521,12 @@ async def bahisoyna(message, arguments):
                         user_bet.deposit += bet_amount
                         session.commit()
 
-                        await client.send_message(message.channel, _("You have added {bet_amount} {bet_currency} to your previous bet on #{bet_id}, making a total of {total_bet_amount} {bet_currency} on that bet.").format_map({"bet_id": bet.id, "bet_amount": bet_amount, "bet_currency": Config.CURRENCY_CODE, "total_bet_amount": user_bet.deposit}))
+                        await message.channel.send(_("You have added {bet_amount} {bet_currency} to your previous bet on #{bet_id}, making a total of {total_bet_amount} {bet_currency} on that bet.").format_map({"bet_id": bet.id, "bet_amount": bet_amount, "bet_currency": Config.CURRENCY_CODE, "total_bet_amount": user_bet.deposit}))
                     else:
                         user_bet = create_user_bet(
                             current_user.id, bet.id, bet_amount)
 
-                        await client.send_message(message.channel, _("You betted {bet_amount} {bet_currency} for #{bet_id}.").format_map({"bet_id": bet.id, "bet_amount": bet_amount, "bet_currency": Config.CURRENCY_CODE}))
+                        await message.channel.send(_("You betted {bet_amount} {bet_currency} for #{bet_id}.").format_map({"bet_id": bet.id, "bet_amount": bet_amount, "bet_currency": Config.CURRENCY_CODE}))
 
     else:
         await send_usage_message(message.channel,
@@ -533,7 +543,7 @@ async def removetables(message, arguments):
         Base.metadata.bind = engine
         Base.metadata.drop_all()
 
-        await client.send_message(message.author, _("Command has successfully been executed."))
+        await message.channel.send(_("Command has successfully been executed."))
 
 
 async def createtables(message, arguments):
@@ -542,23 +552,41 @@ async def createtables(message, arguments):
         Base.metadata.create_all()
         update_currencies()
 
-        await client.send_message(message.author, _("Command has successfully been executed."))
+        await message.channel.send( _("Command has successfully been executed."))
 
 
 async def kendinitemizle(message, arguments):
     def is_me(m):
         return m.author == client.user
 
-    deleted = await client.purge_from(message.channel, limit=10000, check=is_me)
-    await client.send_message(message.author, _("Deleted {deleted} messages.").format_map({"deleted": len(deleted)}))
+    limit = 10000
+
+    if arguments:
+        limit = int(arguments[0])
+
+    today = datetime.datetime.now()
+    limited_days = datetime.timedelta(days=14)
+    date_difference = today - limited_days
+
+    deleted = await message.channel.purge(limit=10000, check=is_me, after=date_difference)
+    await message.author.send(_("Deleted {deleted} messages.").format_map({"deleted": len(deleted)}))
 
 
 async def kanalısüpür(message, arguments):
     def is_command(cmd):
         return cmd.content.startswith(Config.COMMAND_PREFIX)
 
-    deleted = await client.purge_from(message.channel, limit=10000, check=is_command)
-    await client.send_message(message.author, _("Deleted {deleted} messages.").format_map({"deleted": len(deleted)}))
+    limit = 10000
+
+    if arguments:
+        limit = int(arguments[0])
+
+    today = datetime.datetime.now()
+    limited_days = datetime.timedelta(days=14)
+    date_difference = today - limited_days
+    
+    deleted = await message.channel.purge(limit=limit, check=is_command, after=date_difference)
+    await message.author.send(_("Deleted {deleted} messages.").format_map({"deleted": len(deleted)}))
 
 
 async def bahisbelirle(message, arguments):
@@ -568,9 +596,9 @@ async def bahisbelirle(message, arguments):
             " ", message.content.find(" ") + 1):]
         bet = create_bet(get_user(discord_id=message.author.id).first().id, bet_bet, bet_rate)
 
-        await client.send_message(message.channel, _("{user} has opened a new bet: `{bet} ({bet_rate})`").format_map({"user": message.author, "bet": bet_bet, "bet_rate": bet_rate}))
+        await message.channel.send(_("{user} has opened a new bet: `{bet} ({bet_rate})`").format_map({"user": message.author, "bet": bet_bet, "bet_rate": bet_rate}))
     else:
-        await client.send_message(message.channel, _("You don't have access to this command."))
+        await message.channel.send(_("You don't have access to this command."))
 
 
 async def bahissonucu(message, arguments):
@@ -581,9 +609,9 @@ async def bahissonucu(message, arguments):
         bet = get_bet(id=bet_id).first()
 
         if bet_result:
-            await client.send_message(message.channel, _("Result of \"{bet}\": `WON`").format_map({"bet": bet.bet}))
+            await message.channel.send(_("Result of \"{bet}\": `WON`").format_map({"bet": bet.bet}))
         else:
-            await client.send_message(message.channel, _("Result of \"{bet}\": `LOST`").format_map({"bet": bet.bet}))
+            await message.channel.send(_("Result of \"{bet}\": `LOST`").format_map({"bet": bet.bet}))
 
         for bet_player in get_user_bet(bet_id=bet_id).all():
             discord_user = await client.get_user_info(get_user(id=bet_player.user_id).first().discord_id)
@@ -593,9 +621,9 @@ async def bahissonucu(message, arguments):
                 add_currency_to_user(bet_player.user_id,
                                      Config.CURRENCY_CODE, award)
 
-                await client.send_message(message.channel, _("{user} has successfully predicted this bet and won {award} {currency}.").format_map({"user": discord_user.name, "award": award, "currency": Config.CURRENCY_CODE}))
+                await message.channel.send(_("{user} has successfully predicted this bet and won {award} {currency}.").format_map({"user": discord_user.name, "award": award, "currency": Config.CURRENCY_CODE}))
             else:
-                await client.send_message(message.channel, _("{user} lost {deposit} {currency}.").format_map({"user": discord_user.name, "deposit": bet_player.deposit, "currency": Config.CURRENCY_CODE}))
+                await message.channel.send(_("{user} lost {deposit} {currency}.").format_map({"user": discord_user.name, "deposit": bet_player.deposit, "currency": Config.CURRENCY_CODE}))
 
             session.delete(bet_player)
             session.commit()
@@ -603,4 +631,4 @@ async def bahissonucu(message, arguments):
         session.delete(bet)
         session.commit()
     else:
-        await client.send_message(message.channel, _("You don't have access to this command."))
+        await message.channel.send(_("You don't have access to this command."))

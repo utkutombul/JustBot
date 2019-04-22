@@ -71,21 +71,19 @@ async def on_message(message):
 
 @client.event
 async def on_message_delete(message):
-    await client.send_message(
-        client.get_channel(Config.RECORD_CHANNEL_ID),
-        _("Message deleted for **{user}** in *{channel}*: `{message}`").format_map({"channel": message.channel.name, "user": message.author, "message": message.content}))
+    await client.get_channel(int(Config.RECORD_CHANNEL_ID)).send(_("Message deleted for **{user}** in *{channel}*: `{message}`").format_map({"channel": message.channel.name, "user": message.author, "message": message.content}))
 
 
 @client.event
 async def on_member_remove(member):
-    await client.send_message(client.get_channel(Config.RECORD_CHANNEL_ID), _("`{user}` has left the server.").format_map({"user": member.name}))
+    await client.get_channel(int(Config.RECORD_CHANNEL_ID)).send(_("`{user}` has left the server.").format_map({"user": member.name}))
 
 
 @client.event
 async def on_member_ban(member):
-    await client.send_message(client.get_channel(Config.RECORD_CHANNEL_ID), _("`{user}` has been banned from the server.").format_map({"user": member.name}))
+    await client.get_channel(int(Config.RECORD_CHANNEL_ID)).send(_("`{user}` has been banned from the server.").format_map({"user": member.name}))
 
 
 @client.event
 async def on_member_unban(server, user):
-    await client.send_message(client.get_channel(Config.RECORD_CHANNEL_ID), _("`{user}` has been unbanned from the server.").format_map({"user": member.name}))
+    await client.get_channel(int(Config.RECORD_CHANNEL_ID)).send(_("`{user}` has been unbanned from the server.").format_map({"user": member.name}))

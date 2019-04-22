@@ -301,4 +301,4 @@ def create_user_bet(user_id, bet_id, deposit):
 
 
 async def send_usage_message(channel, message):
-    await client.send_message(channel, "**KULLANIM:** `%s`" % (message))
+    await channel.send("**KULLANIM:** `%s`" % (message))
